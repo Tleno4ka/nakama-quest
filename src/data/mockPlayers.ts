@@ -10,7 +10,7 @@ export const mockPlayers: Player[] = [
     compatibility: 87,
     age: 24,
     language: "RU",
-    skill_level: "Diamond",
+    game_ranks: { "Valorant": "Diamond", "CS2": "Global Elite", "Apex Legends": "Platinum" },
   },
   {
     id: "2",
@@ -21,7 +21,7 @@ export const mockPlayers: Player[] = [
     compatibility: 92,
     age: 21,
     language: "RU",
-    skill_level: "Immortal",
+    game_ranks: { "Dota 2": "Immortal", "League of Legends": "Diamond" },
   },
   {
     id: "3",
@@ -32,7 +32,7 @@ export const mockPlayers: Player[] = [
     compatibility: 74,
     age: 19,
     language: "EN/RU",
-    skill_level: "Platinum",
+    game_ranks: { "Overwatch 2": "Platinum", "Apex Legends": "Gold" },
   },
   {
     id: "4",
@@ -43,17 +43,17 @@ export const mockPlayers: Player[] = [
     compatibility: 81,
     age: 27,
     language: "RU",
-    skill_level: "Global Elite",
+    game_ranks: { "CS2": "Global Elite", "Rainbow Six Siege": "Diamond" },
   },
   {
     id: "5",
     nickname: "PixelDreamer",
     avatar: "https://api.dicebear.com/9.x/adventurer/svg?seed=PixelDreamer&backgroundColor=1a1f2e",
-    games: ["Minecraft", "Terraria", "Stardew Valley"],
+    games: ["Minecraft", "Terraria"],
     description: "Строитель и фармер. Ищу компанию для совместного прохождения и креативного мода.",
     compatibility: 65,
     age: 22,
     language: "RU",
-    skill_level: "Casual",
+    game_ranks: {},
   },
 ];

@@ -84,23 +84,15 @@ export default function CreateProfile() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Уровень</label>
-              <select value={skillLevel} onChange={(e) => setSkillLevel(e.target.value)} className={inputClass}>
-                {skillOptions.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Время игры</label>
-              <select value={playTime} onChange={(e) => setPlayTime(e.target.value)} className={inputClass}>
-                <option>Утро</option>
-                <option>День</option>
-                <option>Вечер</option>
-                <option>Ночь</option>
-                <option>Весь день</option>
-              </select>
-            </div>
+          <div>
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Время игры</label>
+            <select value={playTime} onChange={(e) => setPlayTime(e.target.value)} className={inputClass}>
+              <option>Утро</option>
+              <option>День</option>
+              <option>Вечер</option>
+              <option>Ночь</option>
+              <option>Весь день</option>
+            </select>
           </div>
 
           <Button variant="hero" type="submit" className="mt-4 w-full">

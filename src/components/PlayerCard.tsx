@@ -75,14 +75,6 @@ export default function PlayerCard({ player, onLike, onSkip }: PlayerCardProps) 
         {player.description}
       </p>
 
-      {/* Skill */}
-      {player.skill_level && (
-        <div className="mt-3 text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-            {player.skill_level}
-          </span>
-        </div>
-      )}
 
       {/* Actions */}
       <div className="flex items-center justify-center gap-6 py-8">
