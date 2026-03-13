@@ -58,14 +58,14 @@ export default function PlayerCard({ player, onLike, onSkip }: PlayerCardProps) 
         )}
       </div>
 
-      {/* Games */}
+      {/* Games with ranks */}
       <div className="flex flex-wrap justify-center gap-2 px-6">
         {player.games.map((g) => (
           <span
             key={g}
             className="rounded-lg bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
           >
-            {g}
+            {g}{player.game_ranks?.[g] && <span className="ml-1 text-accent">· {player.game_ranks[g]}</span>}
           </span>
         ))}
       </div>
