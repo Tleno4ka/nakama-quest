@@ -12,7 +12,7 @@ export interface Player {
   compatibility: number;
   age?: number;
   language?: string;
-  skill_level?: string;
+  game_ranks?: Record<string, string>;
 }
 
 interface PlayerCardProps {
@@ -58,14 +58,14 @@ export default function PlayerCard({ player, onLike, onSkip }: PlayerCardProps) 
         )}
       </div>
 
-      {/* Games */}
+      {/* Games with ranks */}
       <div className="flex flex-wrap justify-center gap-2 px-6">
         {player.games.map((g) => (
           <span
             key={g}
             className="rounded-lg bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground"
           >
-            {g}
+            {g}{player.game_ranks?.[g] && <span className="ml-1 text-accent">· {player.game_ranks[g]}</span>}
           </span>
         ))}
       </div>
@@ -75,14 +75,6 @@ export default function PlayerCard({ player, onLike, onSkip }: PlayerCardProps) 
         {player.description}
       </p>
 
-      {/* Skill */}
-      {player.skill_level && (
-        <div className="mt-3 text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-            {player.skill_level}
-          </span>
-        </div>
-      )}
 
       {/* Actions */}
       <div className="flex items-center justify-center gap-6 py-8">

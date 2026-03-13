@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const gameOptions = ["Valorant", "CS2", "Dota 2", "League of Legends", "Apex Legends", "Overwatch 2", "Fortnite", "Rainbow Six Siege", "Minecraft", "Terraria"];
-const skillOptions = ["Casual", "Silver", "Gold", "Platinum", "Diamond", "Immortal", "Global Elite"];
 
 export default function CreateProfile() {
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ export default function CreateProfile() {
   const [language, setLanguage] = useState("RU");
   const [description, setDescription] = useState("");
   const [selectedGames, setSelectedGames] = useState<string[]>([]);
-  const [skillLevel, setSkillLevel] = useState("Gold");
   const [playTime, setPlayTime] = useState("Вечер");
 
   const toggleGame = (game: string) => {
@@ -86,23 +84,15 @@ export default function CreateProfile() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Уровень</label>
-              <select value={skillLevel} onChange={(e) => setSkillLevel(e.target.value)} className={inputClass}>
-                {skillOptions.map((s) => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Время игры</label>
-              <select value={playTime} onChange={(e) => setPlayTime(e.target.value)} className={inputClass}>
-                <option>Утро</option>
-                <option>День</option>
-                <option>Вечер</option>
-                <option>Ночь</option>
-                <option>Весь день</option>
-              </select>
-            </div>
+          <div>
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Время игры</label>
+            <select value={playTime} onChange={(e) => setPlayTime(e.target.value)} className={inputClass}>
+              <option>Утро</option>
+              <option>День</option>
+              <option>Вечер</option>
+              <option>Ночь</option>
+              <option>Весь день</option>
+            </select>
           </div>
 
           <Button variant="hero" type="submit" className="mt-4 w-full">
