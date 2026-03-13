@@ -12,7 +12,6 @@ export default function CreateProfile() {
   const [language, setLanguage] = useState("RU");
   const [description, setDescription] = useState("");
   const [selectedGames, setSelectedGames] = useState<string[]>([]);
-  const [skillLevel, setSkillLevel] = useState("Gold");
   const [playTime, setPlayTime] = useState("Вечер");
 
   const toggleGame = (game: string) => {
