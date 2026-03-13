@@ -57,7 +57,10 @@ export default function Sidebar() {
       </nav>
 
       <div className="px-3 pb-6">
-        <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        >
           <LogOut className="h-5 w-5" />
           Выйти
         </button>
