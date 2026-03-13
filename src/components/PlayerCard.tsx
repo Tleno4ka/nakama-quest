@@ -12,7 +12,7 @@ export interface Player {
   compatibility: number;
   age?: number;
   language?: string;
-  skill_level?: string;
+  game_ranks?: Record<string, string>;
 }
 
 interface PlayerCardProps {
