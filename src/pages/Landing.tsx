@@ -18,6 +18,11 @@ const spring = { type: "spring" as const, stiffness: 300, damping: 25, mass: 0.8
 
 export default function Landing() {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && user) navigate("/swipe", { replace: true });
+  }, [user, loading, navigate]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
