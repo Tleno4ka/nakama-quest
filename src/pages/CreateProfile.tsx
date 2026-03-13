@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
 const gameOptions = ["Valorant", "CS2", "Dota 2", "League of Legends", "Apex Legends", "Overwatch 2", "Fortnite", "Rainbow Six Siege", "Minecraft", "Terraria"];
-const skillOptions = ["Casual", "Silver", "Gold", "Platinum", "Diamond", "Immortal", "Global Elite"];
 
 export default function CreateProfile() {
   const navigate = useNavigate();
