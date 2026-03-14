@@ -26,6 +26,8 @@ export type Database = {
           language: string | null
           nickname: string | null
           play_time: string | null
+          telegram_id: number | null
+          telegram_username: string | null
           updated_at: string
         }
         Insert: {
@@ -39,6 +41,8 @@ export type Database = {
           language?: string | null
           nickname?: string | null
           play_time?: string | null
+          telegram_id?: number | null
+          telegram_username?: string | null
           updated_at?: string
         }
         Update: {
@@ -52,6 +56,8 @@ export type Database = {
           language?: string | null
           nickname?: string | null
           play_time?: string | null
+          telegram_id?: number | null
+          telegram_username?: string | null
           updated_at?: string
         }
         Relationships: []
