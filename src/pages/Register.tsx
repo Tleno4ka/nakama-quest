@@ -63,7 +63,7 @@ export default function Register() {
 
   const inputClass = "w-full rounded-xl bg-background px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus";
 
-  const tgBotUsername = import.meta.env.VITE_TELEGRAM_BOT_USERNAME;
+  const { botUsername: tgBotUsername } = useTelegramBotUsername();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
