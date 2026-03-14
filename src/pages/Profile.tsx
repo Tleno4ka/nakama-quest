@@ -192,7 +192,7 @@ export default function Profile() {
                 <span className="text-sm font-medium text-foreground">Telegram</span>
               </div>
               {hasTelegram ? (
-                <span className="text-xs font-semibold text-green-500">
+                <span className="text-xs font-semibold text-primary">
                   @{profile?.telegram_username || "Привязан"}
                 </span>
               ) : tgBotUsername ? (
