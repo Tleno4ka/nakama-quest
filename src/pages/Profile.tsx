@@ -177,7 +177,7 @@ export default function Profile() {
                 <span className="text-sm font-medium text-foreground">Google</span>
               </div>
               {hasGoogle ? (
-                <span className="text-xs font-semibold text-green-500">Привязан</span>
+                <span className="text-xs font-semibold text-primary">Привязан</span>
               ) : (
                 <Button variant="outline" size="sm" onClick={handleLinkGoogle}>Привязать</Button>
               )}
