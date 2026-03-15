@@ -57,31 +57,7 @@ export default function Profile() {
     if (error) toast.error("Ошибка привязки Google");
   };
 
-  const handleLinkTelegram = useCallback(async (data: TelegramLoginData) => {
-    if (!user) return;
-    try {
-      const res = await supabase.functions.invoke("telegram-auth", {
-        body: { telegram_data: data, action: "link", user_id: user.id },
-      });
-
-      if (res.error) throw res.error;
-      const result = res.data;
-
-      if (result.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      toast.success("Telegram привязан!");
-      setProfile((prev: any) => ({
-        ...prev,
-        telegram_id: data.id,
-        telegram_username: data.username,
-      }));
-    } catch {
-      toast.error("Ошибка привязки Telegram");
-    }
-  }, [user]);
+  // Telegram linking is now handled via redirect flow through /telegram-callback?link=true
 
   const inputClass = "w-full rounded-xl bg-background px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus";
   const { botId: tgBotId } = useTelegramBotUsername();
