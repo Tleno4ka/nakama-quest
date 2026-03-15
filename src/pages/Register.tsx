@@ -34,36 +34,9 @@ export default function Register() {
     if (error) toast.error("Ошибка входа через Google");
   };
 
-  const handleTelegramAuth = useCallback(async (data: TelegramLoginData) => {
-    setLoading(true);
-    try {
-      const res = await supabase.functions.invoke("telegram-auth", {
-        body: { telegram_data: data, action: "login" },
-      });
-
-      if (res.error) throw res.error;
-      const result = res.data;
-
-      if (result.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      if (result.session) {
-        await supabase.auth.setSession(result.session);
-        navigate(result.isNewUser ? "/create-profile" : "/swipe");
-      }
-    } catch (err: any) {
-      toast.error("Ошибка входа через Telegram");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [navigate]);
-
   const inputClass = "w-full rounded-xl bg-background px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus";
 
-  const { botUsername: tgBotUsername } = useTelegramBotUsername();
+  const { botId: tgBotId } = useTelegramBotUsername();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
