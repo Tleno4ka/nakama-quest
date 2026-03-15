@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
-import TelegramLoginButton, { type TelegramLoginData } from "@/components/TelegramLoginButton";
+import TelegramLoginButton from "@/components/TelegramLoginButton";
 import { useTelegramBotUsername } from "@/hooks/useTelegramBotUsername";
 
 const skillOptions = ["Casual", "Silver", "Gold", "Platinum", "Diamond", "Immortal", "Global Elite"];
@@ -57,34 +57,10 @@ export default function Profile() {
     if (error) toast.error("Ошибка привязки Google");
   };
 
-  const handleLinkTelegram = useCallback(async (data: TelegramLoginData) => {
-    if (!user) return;
-    try {
-      const res = await supabase.functions.invoke("telegram-auth", {
-        body: { telegram_data: data, action: "link", user_id: user.id },
-      });
-
-      if (res.error) throw res.error;
-      const result = res.data;
-
-      if (result.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      toast.success("Telegram привязан!");
-      setProfile((prev: any) => ({
-        ...prev,
-        telegram_id: data.id,
-        telegram_username: data.username,
-      }));
-    } catch {
-      toast.error("Ошибка привязки Telegram");
-    }
-  }, [user]);
+  // Telegram linking is now handled via redirect flow through /telegram-callback?link=true
 
   const inputClass = "w-full rounded-xl bg-background px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus";
-  const { botUsername: tgBotUsername } = useTelegramBotUsername();
+  const { botId: tgBotId } = useTelegramBotUsername();
 
   if (loading) {
     return (
@@ -195,8 +171,8 @@ export default function Profile() {
                 <span className="text-xs font-semibold text-primary">
                   @{profile?.telegram_username || "Привязан"}
                 </span>
-              ) : tgBotUsername ? (
-                <TelegramLoginButton botName={tgBotUsername} onAuth={handleLinkTelegram} buttonSize="small" />
+              ) : tgBotId ? (
+                <TelegramLoginButton botId={tgBotId || ""} redirectPath="/telegram-callback?link=true" />
               ) : (
                 <span className="text-xs text-muted-foreground">Не настроен</span>
               )}

@@ -15,6 +15,7 @@ import Chat from "./pages/Chat";
 import AIAssistant from "./pages/AIAssistant";
 import Profile from "./pages/Profile";
 import AppLayout from "./components/AppLayout";
+import TelegramCallback from "./pages/TelegramCallback";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/telegram-callback" element={<TelegramCallback />} />
             <Route path="/create-profile" element={<ProtectedRoute><CreateProfile /></ProtectedRoute>} />
             <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
               <Route path="/swipe" element={<SwipePlayers />} />

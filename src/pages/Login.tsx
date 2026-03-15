@@ -1,11 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
-import TelegramLoginButton, { type TelegramLoginData } from "@/components/TelegramLoginButton";
+import TelegramLoginButton from "@/components/TelegramLoginButton";
 import { useTelegramBotUsername } from "@/hooks/useTelegramBotUsername";
 
 export default function Login() {
@@ -33,36 +33,9 @@ export default function Login() {
     if (error) toast.error("Ошибка входа через Google");
   };
 
-  const handleTelegramAuth = useCallback(async (data: TelegramLoginData) => {
-    setLoading(true);
-    try {
-      const res = await supabase.functions.invoke("telegram-auth", {
-        body: { telegram_data: data, action: "login" },
-      });
-
-      if (res.error) throw res.error;
-      const result = res.data;
-
-      if (result.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      if (result.session) {
-        await supabase.auth.setSession(result.session);
-        navigate(result.isNewUser ? "/create-profile" : "/swipe");
-      }
-    } catch (err: any) {
-      toast.error("Ошибка входа через Telegram");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [navigate]);
-
   const inputClass = "w-full rounded-xl bg-background px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus";
 
-  const { botUsername: tgBotUsername } = useTelegramBotUsername();
+  const { botId: tgBotId } = useTelegramBotUsername();
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -91,8 +64,8 @@ export default function Login() {
             Войти через Google
           </Button>
 
-          {tgBotUsername && (
-            <TelegramLoginButton botName={tgBotUsername} onAuth={handleTelegramAuth} />
+          {tgBotId && (
+            <TelegramLoginButton botId={tgBotId} />
           )}
         </div>
 
