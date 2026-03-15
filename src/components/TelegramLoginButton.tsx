@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Send } from "lucide-react";
 
 interface TelegramLoginButtonProps {
-  botName: string;
-  onAuth: (data: TelegramLoginData) => void;
-  buttonSize?: "large" | "medium" | "small";
+  botId: string;
+  redirectPath?: string;
 }
 
 export interface TelegramLoginData {
@@ -16,37 +16,22 @@ export interface TelegramLoginData {
   hash: string;
 }
 
-declare global {
-  interface Window {
-    onTelegramAuth?: (user: TelegramLoginData) => void;
-  }
-}
+export default function TelegramLoginButton({ botId, redirectPath = "/telegram-callback" }: TelegramLoginButtonProps) {
+  const handleClick = () => {
+    const origin = window.location.origin;
+    const returnTo = `${origin}${redirectPath}`;
+    const authUrl = `https://oauth.telegram.org/auth?bot_id=${botId}&origin=${encodeURIComponent(origin)}&embed=0&request_access=write&return_to=${encodeURIComponent(returnTo)}`;
+    window.location.href = authUrl;
+  };
 
-export default function TelegramLoginButton({ botName, onAuth, buttonSize = "large" }: TelegramLoginButtonProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    window.onTelegramAuth = (user: TelegramLoginData) => {
-      onAuth(user);
-    };
-
-    const script = document.createElement("script");
-    script.src = "https://telegram.org/js/telegram-widget.js?22";
-    script.setAttribute("data-telegram-login", botName);
-    script.setAttribute("data-size", buttonSize);
-    script.setAttribute("data-onauth", "onTelegramAuth(user)");
-    script.setAttribute("data-request-access", "write");
-    script.async = true;
-
-    if (containerRef.current) {
-      containerRef.current.innerHTML = "";
-      containerRef.current.appendChild(script);
-    }
-
-    return () => {
-      delete window.onTelegramAuth;
-    };
-  }, [botName, onAuth, buttonSize]);
-
-  return <div ref={containerRef} className="flex justify-center" />;
+  return (
+    <Button
+      variant="outline"
+      className="flex w-full items-center justify-center gap-3"
+      onClick={handleClick}
+    >
+      <Send className="h-5 w-5 text-[#2AABEE]" />
+      Войти через Telegram
+    </Button>
+  );
 }
