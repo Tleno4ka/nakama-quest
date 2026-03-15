@@ -196,7 +196,7 @@ export default function Profile() {
                   @{profile?.telegram_username || "Привязан"}
                 </span>
               ) : tgBotUsername ? (
-                <TelegramLoginButton botName={tgBotUsername} onAuth={handleLinkTelegram} buttonSize="small" />
+                <TelegramLoginButton botId={tgBotId || ""} redirectPath="/telegram-callback?link=true" />
               ) : (
                 <span className="text-xs text-muted-foreground">Не настроен</span>
               )}

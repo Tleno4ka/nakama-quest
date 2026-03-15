@@ -64,8 +64,8 @@ export default function Login() {
             Войти через Google
           </Button>
 
-          {tgBotUsername && (
-            <TelegramLoginButton botName={tgBotUsername} onAuth={handleTelegramAuth} />
+          {tgBotId && (
+            <TelegramLoginButton botId={tgBotId} />
           )}
         </div>
 

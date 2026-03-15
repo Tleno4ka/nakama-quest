@@ -65,8 +65,8 @@ export default function Register() {
             Войти через Google
           </Button>
 
-          {tgBotUsername && (
-            <TelegramLoginButton botName={tgBotUsername} onAuth={handleTelegramAuth} />
+          {tgBotId && (
+            <TelegramLoginButton botId={tgBotId} />
           )}
         </div>
 
