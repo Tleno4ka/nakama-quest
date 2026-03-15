@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
-import TelegramLoginButton, { type TelegramLoginData } from "@/components/TelegramLoginButton";
+import TelegramLoginButton from "@/components/TelegramLoginButton";
 import { useTelegramBotUsername } from "@/hooks/useTelegramBotUsername";
 
 export default function Register() {
