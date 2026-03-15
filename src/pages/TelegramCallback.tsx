@@ -13,10 +13,11 @@ export default function TelegramCallback() {
     const id = searchParams.get("id");
     const hash = searchParams.get("hash");
     const auth_date = searchParams.get("auth_date");
+    const isLink = searchParams.get("link") === "true";
 
     if (!id || !hash || !auth_date) {
       toast.error("Неверные данные авторизации Telegram");
-      navigate("/login");
+      navigate(isLink ? "/profile" : "/login");
       return;
     }
 
@@ -32,29 +33,52 @@ export default function TelegramCallback() {
 
     (async () => {
       try {
-        const res = await supabase.functions.invoke("telegram-auth", {
-          body: { telegram_data: telegramData, action: "login" },
-        });
+        if (isLink) {
+          // Link Telegram to existing account
+          const { data: { user } } = await supabase.auth.getUser();
+          if (!user) {
+            toast.error("Необходимо войти в аккаунт");
+            navigate("/login");
+            return;
+          }
 
-        if (res.error) throw res.error;
-        const result = res.data;
+          const res = await supabase.functions.invoke("telegram-auth", {
+            body: { telegram_data: telegramData, action: "link", user_id: user.id },
+          });
 
-        if (result.error) {
-          toast.error(result.error);
-          navigate("/login");
-          return;
-        }
-
-        if (result.session) {
-          await supabase.auth.setSession(result.session);
-          navigate(result.isNewUser ? "/create-profile" : "/swipe");
+          if (res.error) throw res.error;
+          if (res.data?.error) {
+            toast.error(res.data.error);
+          } else {
+            toast.success("Telegram привязан!");
+          }
+          navigate("/profile");
         } else {
-          navigate("/login");
+          // Login/register via Telegram
+          const res = await supabase.functions.invoke("telegram-auth", {
+            body: { telegram_data: telegramData, action: "login" },
+          });
+
+          if (res.error) throw res.error;
+          const result = res.data;
+
+          if (result.error) {
+            toast.error(result.error);
+            navigate("/login");
+            return;
+          }
+
+          if (result.session) {
+            await supabase.auth.setSession(result.session);
+            navigate(result.isNewUser ? "/create-profile" : "/swipe");
+          } else {
+            navigate("/login");
+          }
         }
       } catch (err: any) {
         console.error("Telegram auth error:", err);
-        toast.error("Ошибка входа через Telegram");
-        navigate("/login");
+        toast.error("Ошибка авторизации через Telegram");
+        navigate(isLink ? "/profile" : "/login");
       } finally {
         setProcessing(false);
       }
