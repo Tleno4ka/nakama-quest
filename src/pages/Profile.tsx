@@ -84,7 +84,7 @@ export default function Profile() {
   }, [user]);
 
   const inputClass = "w-full rounded-xl bg-background px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus";
-  const { botUsername: tgBotUsername } = useTelegramBotUsername();
+  const { botId: tgBotId } = useTelegramBotUsername();
 
   if (loading) {
     return (
