@@ -195,7 +195,7 @@ export default function Profile() {
                 <span className="text-xs font-semibold text-primary">
                   @{profile?.telegram_username || "Привязан"}
                 </span>
-              ) : tgBotUsername ? (
+              ) : tgBotId ? (
                 <TelegramLoginButton botId={tgBotId || ""} redirectPath="/telegram-callback?link=true" />
               ) : (
                 <span className="text-xs text-muted-foreground">Не настроен</span>
