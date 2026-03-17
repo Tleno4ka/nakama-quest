@@ -18,9 +18,10 @@ export interface TelegramLoginData {
 
 export default function TelegramLoginButton({ botId, redirectPath = "/telegram-callback" }: TelegramLoginButtonProps) {
   const handleClick = () => {
-    const origin = window.location.origin;
-    const returnTo = `${origin}${redirectPath}`;
-    const authUrl = `https://oauth.telegram.org/auth?bot_id=${botId}&origin=${encodeURIComponent(origin)}&embed=0&request_access=write&return_to=${encodeURIComponent(returnTo)}`;
+    const currentUrl = new URL(window.location.href);
+    const originDomain = currentUrl.host;
+    const returnTo = new URL(redirectPath, currentUrl.origin).toString();
+    const authUrl = `https://oauth.telegram.org/auth?bot_id=${encodeURIComponent(botId)}&origin=${encodeURIComponent(originDomain)}&embed=0&request_access=write&return_to=${encodeURIComponent(returnTo)}`;
     window.location.href = authUrl;
   };
 
