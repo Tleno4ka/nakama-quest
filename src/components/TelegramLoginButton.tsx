@@ -22,7 +22,12 @@ export default function TelegramLoginButton({ botId, redirectPath = "/telegram-c
     const originDomain = currentUrl.host;
     const returnTo = new URL(redirectPath, currentUrl.origin).toString();
     const authUrl = `https://oauth.telegram.org/auth?bot_id=${encodeURIComponent(botId)}&origin=${encodeURIComponent(originDomain)}&embed=0&request_access=write&return_to=${encodeURIComponent(returnTo)}`;
-    window.location.href = authUrl;
+    // Use top-level navigation to escape iframe, or open new window as fallback
+    if (window.top && window.top !== window.self) {
+      window.open(authUrl, '_blank');
+    } else {
+      window.location.href = authUrl;
+    }
   };
 
   return (
