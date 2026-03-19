@@ -17,6 +17,7 @@ export type Database = {
       profiles: {
         Row: {
           age: number | null
+          age_changed_at: string | null
           avatar_url: string | null
           created_at: string
           description: string | null
@@ -25,13 +26,16 @@ export type Database = {
           id: string
           language: string | null
           nickname: string | null
+          nickname_changed_at: string | null
           play_time: string | null
           telegram_id: number | null
           telegram_username: string | null
+          time_slots: Json | null
           updated_at: string
         }
         Insert: {
           age?: number | null
+          age_changed_at?: string | null
           avatar_url?: string | null
           created_at?: string
           description?: string | null
@@ -40,13 +44,16 @@ export type Database = {
           id: string
           language?: string | null
           nickname?: string | null
+          nickname_changed_at?: string | null
           play_time?: string | null
           telegram_id?: number | null
           telegram_username?: string | null
+          time_slots?: Json | null
           updated_at?: string
         }
         Update: {
           age?: number | null
+          age_changed_at?: string | null
           avatar_url?: string | null
           created_at?: string
           description?: string | null
@@ -55,9 +62,11 @@ export type Database = {
           id?: string
           language?: string | null
           nickname?: string | null
+          nickname_changed_at?: string | null
           play_time?: string | null
           telegram_id?: number | null
           telegram_username?: string | null
+          time_slots?: Json | null
           updated_at?: string
         }
         Relationships: []
