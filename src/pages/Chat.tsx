@@ -161,6 +161,14 @@ export default function Chat() {
               placeholder="Написать сообщение..."
               className="flex-1 rounded-xl bg-input px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus"
             />
+            <Button
+              variant={isRecording ? "destructive" : "outline"}
+              size="icon"
+              onClick={toggleVoice}
+              className="shrink-0"
+            >
+              {isRecording ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+            </Button>
             <Button variant="default" size="icon" onClick={sendMessage}>
               <Send className="h-4 w-4" />
             </Button>
