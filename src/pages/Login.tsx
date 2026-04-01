@@ -10,17 +10,19 @@ import { useTelegramBotUsername } from "@/hooks/useTelegramBotUsername";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const trimmed = login.trim().toLowerCase();
+    const fakeEmail = `${trimmed}@nakama.local`;
+    const { error } = await supabase.auth.signInWithPassword({ email: fakeEmail, password });
     setLoading(false);
     if (error) {
-      toast.error(error.message);
+      toast.error("Неверный логин или пароль");
     } else {
       navigate("/swipe");
     }
@@ -77,8 +79,15 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="your@email.com" required />
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Логин</label>
+            <input
+              type="text"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+              className={inputClass}
+              placeholder="my_nickname"
+              required
+            />
           </div>
           <div>
             <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Пароль</label>

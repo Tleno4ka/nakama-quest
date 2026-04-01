@@ -10,20 +10,34 @@ import { useTelegramBotUsername } from "@/hooks/useTelegramBotUsername";
 
 export default function Register() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmed = login.trim().toLowerCase();
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(trimmed)) {
+      toast.error("Логин: 3–20 символов, только латиница, цифры и _");
+      return;
+    }
     setLoading(true);
-    const { error } = await supabase.auth.signUp({ email, password });
+    const fakeEmail = `${trimmed}@nakama.local`;
+    const { error } = await supabase.auth.signUp({
+      email: fakeEmail,
+      password,
+      options: { data: { login: trimmed } },
+    });
     setLoading(false);
     if (error) {
-      toast.error(error.message);
+      if (error.message.includes("already registered")) {
+        toast.error("Этот логин уже занят");
+      } else {
+        toast.error(error.message);
+      }
     } else {
-      toast.success("Проверь почту для подтверждения аккаунта!");
-      navigate("/login");
+      toast.success("Аккаунт создан!");
+      navigate("/create-profile");
     }
   };
 
@@ -78,8 +92,18 @@ export default function Register() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="your@email.com" required />
+            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Логин</label>
+            <input
+              type="text"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+              className={inputClass}
+              placeholder="my_nickname"
+              required
+              minLength={3}
+              maxLength={20}
+            />
+            <p className="mt-1 text-xs text-muted-foreground">3–20 символов: латиница, цифры, _</p>
           </div>
           <div>
             <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground">Пароль</label>
