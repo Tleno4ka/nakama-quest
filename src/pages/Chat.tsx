@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { Send, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { toast } from "sonner";
 interface Message {
   id: string;
   sender: "me" | "them";
@@ -25,6 +25,8 @@ export default function Chat() {
   const [selectedContact, setSelectedContact] = useState(contacts[0]);
   const [messages, setMessages] = useState<Message[]>(mockMessages);
   const [input, setInput] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
+  const recognitionRef = useRef<any>(null);
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -34,6 +36,55 @@ export default function Chat() {
     ]);
     setInput("");
   };
+
+  const toggleVoice = useCallback(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      toast.error("Голосовой ввод не поддерживается в этом браузере");
+      return;
+    }
+
+    if (isRecording && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsRecording(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "ru-RU";
+    recognition.interimResults = true;
+    recognition.continuous = true;
+    recognitionRef.current = recognition;
+
+    let finalTranscript = "";
+
+    recognition.onresult = (event: any) => {
+      let interim = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interim = transcript;
+        }
+      }
+      setInput(finalTranscript + interim);
+    };
+
+    recognition.onerror = (event: any) => {
+      if (event.error !== "aborted") {
+        toast.error("Ошибка распознавания речи");
+      }
+      setIsRecording(false);
+    };
+
+    recognition.onend = () => {
+      setIsRecording(false);
+    };
+
+    recognition.start();
+    setIsRecording(true);
+  }, [isRecording]);
 
   return (
     <div className="flex h-screen">
@@ -110,6 +161,14 @@ export default function Chat() {
               placeholder="Написать сообщение..."
               className="flex-1 rounded-xl bg-input px-4 py-3 text-sm text-foreground shadow-card outline-none transition-shadow focus:shadow-input-focus"
             />
+            <Button
+              variant={isRecording ? "destructive" : "outline"}
+              size="icon"
+              onClick={toggleVoice}
+              className="shrink-0"
+            >
+              {isRecording ? <MicOff className="h-4 w-4 animate-pulse" /> : <Mic className="h-4 w-4" />}
+            </Button>
             <Button variant="default" size="icon" onClick={sendMessage}>
               <Send className="h-4 w-4" />
             </Button>
