@@ -418,7 +418,23 @@ export default function Landing() {
         <motion.form
           variants={fadeUp}
           transition={spring}
-          onSubmit={(e) => { e.preventDefault(); }}
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.message.trim()) return;
+            setContactLoading(true);
+            const { error } = await supabase.from("contact_messages").insert({
+              name: contactForm.name.trim(),
+              email: contactForm.email.trim(),
+              message: contactForm.message.trim(),
+            });
+            setContactLoading(false);
+            if (error) {
+              alert("Ошибка отправки. Попробуйте позже.");
+            } else {
+              alert("Сообщение отправлено!");
+              setContactForm({ name: "", email: "", message: "" });
+            }
+          }}
           className="mt-10 space-y-4 rounded-2xl bg-card p-6 shadow-card sm:p-8"
         >
           <div className="grid gap-4 sm:grid-cols-2">
