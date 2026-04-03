@@ -133,6 +133,7 @@ export default function Landing() {
   const { user, loading } = useAuth();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+  const [contactLoading, setContactLoading] = useState(false);
 
   useEffect(() => {
     if (!loading && user) navigate("/swipe", { replace: true });
