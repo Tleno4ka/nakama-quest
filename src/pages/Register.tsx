@@ -60,6 +60,12 @@ export default function Register() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md rounded-3xl bg-card p-10 shadow-card-hover"
       >
+        <button
+          onClick={() => navigate("/")}
+          className="mb-6 flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" /> На главную
+        </button>
         <h1 className="text-3xl font-extrabold text-foreground">
           Присоединяйся к <span className="text-primary">Nakama</span>
         </h1>

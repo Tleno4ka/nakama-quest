@@ -460,8 +460,8 @@ export default function Landing() {
             onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
             className="w-full rounded-xl border border-border bg-input px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:shadow-input-focus transition-shadow resize-none"
           />
-          <Button variant="hero" className="w-full sm:w-auto group">
-            Отправить <Send className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <Button variant="hero" className="w-full sm:w-auto group" type="submit" disabled={contactLoading}>
+            {contactLoading ? "Отправка..." : "Отправить"} <Send className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </motion.form>
       </Section>
