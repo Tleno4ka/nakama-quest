@@ -10,7 +10,8 @@ import {
   Mail, MessageSquare
 } from "lucide-react";
 import { useRef } from "react";
-import heroMockup from "@/assets/hero-mockup.jpg";
+import heroMockup from "@/assets/hero-mockup-web.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
 /* ─── animation helpers ─── */
 const spring = { type: "spring" as const, stiffness: 260, damping: 28 };
