@@ -180,9 +180,6 @@ export default function Landing() {
               Начать бесплатно
               <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button variant="outline" size="lg" onClick={cta}>
-              Попробовать
-            </Button>
           </div>
           {/* mini stats */}
           <div className="mt-10 flex flex-wrap justify-center gap-6 md:justify-start">
