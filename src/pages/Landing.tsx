@@ -192,13 +192,13 @@ export default function Landing() {
           </div>
         </motion.div>
         <motion.div variants={scaleIn} transition={spring} className="relative flex-1 flex justify-center">
-          <div className="relative w-full max-w-md">
+          <div className="relative w-full max-w-lg">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl" />
             <img
               src={heroMockup}
-              alt="Nakama — поиск тиммейтов"
-              width={1024}
-              height={768}
+              alt="Nakama — веб-приложение для поиска тиммейтов"
+              width={1280}
+              height={800}
               className="relative w-full rounded-2xl shadow-2xl"
             />
           </div>
