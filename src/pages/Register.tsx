@@ -7,6 +7,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import TelegramLoginButton from "@/components/TelegramLoginButton";
 import { useTelegramBotUsername } from "@/hooks/useTelegramBotUsername";
+import { ArrowLeft } from "lucide-react";
 
 export default function Register() {
   const navigate = useNavigate();
