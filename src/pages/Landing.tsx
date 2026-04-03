@@ -10,7 +10,8 @@ import {
   Mail, MessageSquare
 } from "lucide-react";
 import { useRef } from "react";
-import heroMockup from "@/assets/hero-mockup.jpg";
+import heroMockup from "@/assets/hero-mockup-web.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
 /* ─── animation helpers ─── */
 const spring = { type: "spring" as const, stiffness: 260, damping: 28 };
@@ -132,6 +133,7 @@ export default function Landing() {
   const { user, loading } = useAuth();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
+  const [contactLoading, setContactLoading] = useState(false);
 
   useEffect(() => {
     if (!loading && user) navigate("/swipe", { replace: true });
@@ -178,9 +180,6 @@ export default function Landing() {
               Начать бесплатно
               <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
-            <Button variant="outline" size="lg" onClick={cta}>
-              Попробовать
-            </Button>
           </div>
           {/* mini stats */}
           <div className="mt-10 flex flex-wrap justify-center gap-6 md:justify-start">
@@ -193,13 +192,13 @@ export default function Landing() {
           </div>
         </motion.div>
         <motion.div variants={scaleIn} transition={spring} className="relative flex-1 flex justify-center">
-          <div className="relative w-full max-w-md">
+          <div className="relative w-full max-w-lg">
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-primary/20 to-accent/20 blur-2xl" />
             <img
               src={heroMockup}
-              alt="Nakama — поиск тиммейтов"
-              width={1024}
-              height={768}
+              alt="Nakama — веб-приложение для поиска тиммейтов"
+              width={1280}
+              height={800}
               className="relative w-full rounded-2xl shadow-2xl"
             />
           </div>
@@ -419,7 +418,23 @@ export default function Landing() {
         <motion.form
           variants={fadeUp}
           transition={spring}
-          onSubmit={(e) => { e.preventDefault(); }}
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (!contactForm.name.trim() || !contactForm.email.trim() || !contactForm.message.trim()) return;
+            setContactLoading(true);
+            const { error } = await supabase.from("contact_messages").insert({
+              name: contactForm.name.trim(),
+              email: contactForm.email.trim(),
+              message: contactForm.message.trim(),
+            });
+            setContactLoading(false);
+            if (error) {
+              alert("Ошибка отправки. Попробуйте позже.");
+            } else {
+              alert("Сообщение отправлено!");
+              setContactForm({ name: "", email: "", message: "" });
+            }
+          }}
           className="mt-10 space-y-4 rounded-2xl bg-card p-6 shadow-card sm:p-8"
         >
           <div className="grid gap-4 sm:grid-cols-2">
@@ -445,8 +460,8 @@ export default function Landing() {
             onChange={(e) => setContactForm((f) => ({ ...f, message: e.target.value }))}
             className="w-full rounded-xl border border-border bg-input px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:shadow-input-focus transition-shadow resize-none"
           />
-          <Button variant="hero" className="w-full sm:w-auto group">
-            Отправить <Send className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <Button variant="hero" className="w-full sm:w-auto group" type="submit" disabled={contactLoading}>
+            {contactLoading ? "Отправка..." : "Отправить"} <Send className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </motion.form>
       </Section>
