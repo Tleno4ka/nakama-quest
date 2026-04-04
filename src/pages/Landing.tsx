@@ -208,7 +208,7 @@ export default function Landing() {
       {/* ════════ HOW IT WORKS ════════ */}
       <Section id="how" className="mx-auto max-w-5xl px-4 py-20 sm:px-8">
         <motion.h2 variants={fadeUp} transition={spring} className="text-center text-2xl font-extrabold text-foreground sm:text-3xl lg:text-4xl">
-          Как это работает
+           Как это работает?
         </motion.h2>
         <motion.p variants={fadeUp} transition={spring} className="mx-auto mt-3 max-w-md text-center text-muted-foreground">
           От регистрации до первой игры — 5 простых шагов
