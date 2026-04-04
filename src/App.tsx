@@ -16,6 +16,7 @@ import AIAssistant from "./pages/AIAssistant";
 import Profile from "./pages/Profile";
 import AppLayout from "./components/AppLayout";
 import TelegramCallback from "./pages/TelegramCallback";
+import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
