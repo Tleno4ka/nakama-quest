@@ -33,6 +33,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/telegram-callback" element={<TelegramCallback />} />
+            <Route path="/analytics" element={<Analytics />} />
             <Route path="/create-profile" element={<ProtectedRoute><CreateProfile /></ProtectedRoute>} />
             <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
               <Route path="/swipe" element={<SwipePlayers />} />

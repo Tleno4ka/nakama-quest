@@ -153,6 +153,9 @@ export default function Landing() {
             <a href="#how" className="transition-colors hover:text-foreground">Как это работает</a>
             <a href="#pricing" className="transition-colors hover:text-foreground">Тарифы</a>
             <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
+            <button onClick={() => navigate("/analytics")} className="transition-colors hover:text-foreground flex items-center gap-1">
+              <span>📊</span> Аналитика
+            </button>
           </nav>
           <div className="flex gap-2 sm:gap-3">
             <Button variant="ghost" size="sm" onClick={() => navigate("/login")}>Войти</Button>
