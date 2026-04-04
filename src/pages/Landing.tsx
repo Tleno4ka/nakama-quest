@@ -150,7 +150,7 @@ export default function Landing() {
             Naka<span className="text-primary">ma</span>
           </span>
           <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-            <a href="#how" className="transition-colors hover:text-foreground">Как это работает?</a>
+            <a href="#how" className="transition-colors hover:text-foreground">Как это работает</a>
             <a href="#pricing" className="transition-colors hover:text-foreground">Тарифы</a>
             <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
           </nav>
@@ -208,7 +208,7 @@ export default function Landing() {
       {/* ════════ HOW IT WORKS ════════ */}
       <Section id="how" className="mx-auto max-w-5xl px-4 py-20 sm:px-8">
         <motion.h2 variants={fadeUp} transition={spring} className="text-center text-2xl font-extrabold text-foreground sm:text-3xl lg:text-4xl">
-           Как это работает?
+          Как это работает
         </motion.h2>
         <motion.p variants={fadeUp} transition={spring} className="mx-auto mt-3 max-w-md text-center text-muted-foreground">
           От регистрации до первой игры — 5 простых шагов
