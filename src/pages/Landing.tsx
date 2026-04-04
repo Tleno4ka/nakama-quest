@@ -150,7 +150,7 @@ export default function Landing() {
             Naka<span className="text-primary">ma</span>
           </span>
           <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-            <a href="#how" className="transition-colors hover:text-foreground">Как это работает</a>
+            <a href="#how" className="transition-colors hover:text-foreground">Как это работает?</a>
             <a href="#pricing" className="transition-colors hover:text-foreground">Тарифы</a>
             <a href="#faq" className="transition-colors hover:text-foreground">FAQ</a>
           </nav>
