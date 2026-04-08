@@ -65,6 +65,7 @@ export default function AIAssistant() {
     }
   };
 
+  return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center gap-3 border-b border-border px-6 py-4">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/20">
