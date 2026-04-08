@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+const WEBHOOK_URL = "https://webhook.nodul.ru/22685/dev/deb6a1bc-95f6-4728-bd12-240c2dd06d3a";
 
 interface Message {
   id: string;
@@ -13,78 +13,19 @@ interface Message {
   content: string;
 }
 
-async function streamChat({
-  messages,
-  onDelta,
-  onDone,
-}: {
-  messages: { role: string; content: string }[];
-  onDelta: (text: string) => void;
-  onDone: () => void;
-}) {
-  const resp = await fetch(CHAT_URL, {
+async function sendToWebhook(userMessage: string): Promise<string> {
+  const resp = await fetch(WEBHOOK_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-    },
-    body: JSON.stringify({ messages }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: userMessage }),
   });
 
   if (!resp.ok) {
-    const err = await resp.json().catch(() => ({ error: "Ошибка сети" }));
-    throw new Error(err.error || `HTTP ${resp.status}`);
+    throw new Error(`Ошибка сервера: ${resp.status}`);
   }
 
-  if (!resp.body) throw new Error("No response body");
-
-  const reader = resp.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = "";
-  let streamDone = false;
-
-  while (!streamDone) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    let idx: number;
-    while ((idx = buffer.indexOf("\n")) !== -1) {
-      let line = buffer.slice(0, idx);
-      buffer = buffer.slice(idx + 1);
-      if (line.endsWith("\r")) line = line.slice(0, -1);
-      if (line.startsWith(":") || line.trim() === "") continue;
-      if (!line.startsWith("data: ")) continue;
-      const json = line.slice(6).trim();
-      if (json === "[DONE]") { streamDone = true; break; }
-      try {
-        const parsed = JSON.parse(json);
-        const content = parsed.choices?.[0]?.delta?.content;
-        if (content) onDelta(content);
-      } catch {
-        buffer = line + "\n" + buffer;
-        break;
-      }
-    }
-  }
-
-  // flush remaining
-  if (buffer.trim()) {
-    for (let raw of buffer.split("\n")) {
-      if (!raw) continue;
-      if (raw.endsWith("\r")) raw = raw.slice(0, -1);
-      if (!raw.startsWith("data: ")) continue;
-      const json = raw.slice(6).trim();
-      if (json === "[DONE]") continue;
-      try {
-        const parsed = JSON.parse(json);
-        const content = parsed.choices?.[0]?.delta?.content;
-        if (content) onDelta(content);
-      } catch { /* ignore */ }
-    }
-  }
-
-  onDone();
+  const data = await resp.json();
+  return data.message || "Нет ответа";
 }
 
 export default function AIAssistant() {
