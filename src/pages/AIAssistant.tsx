@@ -52,30 +52,17 @@ export default function AIAssistant() {
     setInput("");
     setLoading(true);
 
-    let assistantContent = "";
-
-    const upsert = (chunk: string) => {
-      assistantContent += chunk;
-      setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        if (last?.role === "assistant" && last.id !== "welcome") {
-          return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: assistantContent } : m));
-        }
-        return [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: assistantContent }];
-      });
-    };
-
     try {
-      await streamChat({
-        messages: newMessages.filter((m) => m.id !== "welcome").map(({ role, content }) => ({ role, content })),
-        onDelta: upsert,
-        onDone: () => setLoading(false),
-      });
+      const reply = await sendToWebhook(input);
+      setMessages((prev) => [
+        ...prev,
+        { id: (Date.now() + 1).toString(), role: "assistant", content: reply },
+      ]);
     } catch (e: any) {
-      setLoading(false);
       toast.error(e.message || "Ошибка при получении ответа");
+    } finally {
+      setLoading(false);
     }
-  };
 
   return (
     <div className="flex h-screen flex-col">
