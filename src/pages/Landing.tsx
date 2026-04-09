@@ -168,7 +168,7 @@ export default function Landing() {
       <Section className="relative mx-auto flex w-full max-w-7xl flex-col-reverse items-center gap-10 px-4 pb-16 pt-12 sm:px-8 md:flex-row md:gap-16 md:pb-28 md:pt-20 lg:pt-28">
         <motion.div variants={fadeUp} transition={spring} className="flex-1 text-center md:text-left">
           <h1 className="text-3xl font-extrabold leading-[1.1] text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-            Играй не в одиночку —{" "}
+            <span className="whitespace-nowrap">Играй не в одиночку</span> —{" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               находи идеальных тиммейтов
             </span>{" "}
