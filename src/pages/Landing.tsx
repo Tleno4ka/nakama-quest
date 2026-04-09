@@ -146,8 +146,8 @@ export default function Landing() {
       {/* ════════ HEADER ════════ */}
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-8">
-          <span className="text-xl font-extrabold tracking-tight sm:text-2xl">
-            Naka<span className="text-primary">ma</span>
+          <span className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">
+            Nakama
           </span>
           <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
             <a href="#how" className="transition-colors hover:text-foreground">Как это работает</a>
