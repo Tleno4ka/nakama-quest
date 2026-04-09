@@ -472,8 +472,8 @@ export default function Landing() {
       {/* ════════ FOOTER ════════ */}
       <footer className="border-t border-border bg-card/50">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-10 sm:flex-row sm:justify-between sm:px-8">
-          <span className="text-lg font-extrabold tracking-tight">
-            Naka<span className="text-primary">ma</span>
+          <span className="text-lg font-extrabold tracking-tight text-white">
+            Nakama
           </span>
           <nav className="flex flex-wrap justify-center gap-5 text-xs text-muted-foreground">
             <a href="#" className="transition-colors hover:text-foreground">Privacy Policy</a>
