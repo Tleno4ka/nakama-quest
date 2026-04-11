@@ -4,8 +4,7 @@ import { Send, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
-
-const WEBHOOK_URL = "https://webhook.nodul.ru/22685/dev/8b637668-760a-49a1-9865-1bafb8757f0c";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   id: string;
@@ -13,24 +12,16 @@ interface Message {
   content: string;
 }
 
-async function sendToWebhook(userMessage: string): Promise<string> {
-  const resp = await fetch(WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: userMessage }),
+async function sendToAI(userMessage: string): Promise<string> {
+  const { data, error } = await supabase.functions.invoke("ai-chat", {
+    body: { message: userMessage },
   });
 
-  if (!resp.ok) {
-    throw new Error(`Ошибка сервера: ${resp.status}`);
+  if (error) {
+    throw new Error(error.message || "Ошибка при получении ответа");
   }
 
-  const text = await resp.text();
-  try {
-    const data = JSON.parse(text);
-    return data.message || text || "Нет ответа";
-  } catch {
-    return text || "Нет ответа";
-  }
+  return data?.message || "Нет ответа";
 }
 
 export default function AIAssistant() {
@@ -58,7 +49,7 @@ export default function AIAssistant() {
     setLoading(true);
 
     try {
-      const reply = await sendToWebhook(input);
+      const reply = await sendToAI(input);
       setMessages((prev) => [
         ...prev,
         { id: (Date.now() + 1).toString(), role: "assistant", content: reply },
