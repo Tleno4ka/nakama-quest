@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
 
-const WEBHOOK_URL = "https://webhook.nodul.ru/22685/dev/deb6a1bc-95f6-4728-bd12-240c2dd06d3a";
+const WEBHOOK_URL = "https://webhook.nodul.ru/22685/dev/8b637668-760a-49a1-9865-1bafb8757f0c";
 
 interface Message {
   id: string;
