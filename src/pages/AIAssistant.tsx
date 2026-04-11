@@ -49,7 +49,7 @@ export default function AIAssistant() {
     setLoading(true);
 
     try {
-      const reply = await sendToWebhook(input);
+      const reply = await sendToAI(input);
       setMessages((prev) => [
         ...prev,
         { id: (Date.now() + 1).toString(), role: "assistant", content: reply },
