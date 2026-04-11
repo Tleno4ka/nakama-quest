@@ -24,8 +24,13 @@ async function sendToWebhook(userMessage: string): Promise<string> {
     throw new Error(`Ошибка сервера: ${resp.status}`);
   }
 
-  const data = await resp.json();
-  return data.message || "Нет ответа";
+  const text = await resp.text();
+  try {
+    const data = JSON.parse(text);
+    return data.message || text || "Нет ответа";
+  } catch {
+    return text || "Нет ответа";
+  }
 }
 
 export default function AIAssistant() {
