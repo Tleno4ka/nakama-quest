@@ -1,5 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Search, Heart, MessageCircle, Bot, User, LogOut, BarChart3 } from "lucide-react";
 import { Search, Heart, MessageCircle, Bot, User, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
