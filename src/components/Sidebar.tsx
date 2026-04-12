@@ -9,6 +9,7 @@ const navItems = [
   { to: "/chat", icon: MessageCircle, label: "Чат" },
   { to: "/ai", icon: Bot, label: "AI" },
   { to: "/profile", icon: User, label: "Профиль" },
+  { to: "/analytics", icon: BarChart3, label: "Аналитика" },
 ];
 
 export default function Sidebar() {
