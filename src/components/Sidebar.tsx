@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Heart, MessageCircle, Bot, User, LogOut } from "lucide-react";
+import { Search, Heart, MessageCircle, Bot, User, LogOut, BarChart3 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const navItems = [
@@ -9,6 +9,7 @@ const navItems = [
   { to: "/chat", icon: MessageCircle, label: "Чат" },
   { to: "/ai", icon: Bot, label: "AI" },
   { to: "/profile", icon: User, label: "Профиль" },
+  { to: "/analytics", icon: BarChart3, label: "Аналитика" },
 ];
 
 export default function Sidebar() {
